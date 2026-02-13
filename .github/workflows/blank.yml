@@ -17,6 +17,6 @@ jobs:
       - name: Sync GLPI 9.5 Image
         run: |
           # 拉取 9.5 版本的镜像
-          docker pull diouxx/glpi:9.5.1
-          docker tag diouxx/glpi:9.5.1 crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-glpi:9.5.1
-          docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-glpi:9.5.1
+          docker pull diouxx/glpi:9.5
+          docker tag diouxx/glpi:9.5 crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-glpi:9.5
+          docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-glpi:9.5
