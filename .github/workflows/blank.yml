@@ -7,13 +7,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Login to Aliyun ACR
-        uses: docker/login-action@v3
-        with:
-          # 建议统一使用你提到的那个长串域名
-          registry: crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
+      - name: Debug and Login
+        run: |
+          # 检查变量是否为空（如果为空会直接报错退出）
+          if [ -z "${{ secrets.ACR_USERNAME }}" ]; then echo "ERROR: USERNAME IS EMPTY"; exit 1; fi
+          if [ -z "${{ secrets.ACR_PASSWORD }}" ]; then echo "ERROR: PASSWORD IS EMPTY"; exit 1; fi
+          
+          # 手动执行登录，看看详细报错
+          echo "${{ secrets.ACR_PASSWORD }}" | docker login crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com --username "${{ secrets.ACR_USERNAME }}" --password-stdin
 
       - name: Pull and Push
         run: |
