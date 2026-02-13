@@ -1,0 +1,27 @@
+name: Docker Hub to Aliyun ACR
+
+on:
+  workflow_dispatch: # 这样你可以手动点一下按钮就开始搬运
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Aliyun ACR
+        uses: docker/login-action@v3
+        with:
+          registry: crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/images # 这里的地址根据你的阿里云仓库地域修改
+          username: ${{ secrets.ACR_USERNAME }}      # 这里不用改，后面我们在设置里填入
+          password: ${{ secrets.ACR_PASSWORD }}      # 这里不用改
+
+      - name: Pull and Push
+        run: |
+          # 1. 从 Docker Hub 拉取你想要的镜像
+          docker pull diouxx/glpi:latest
+          
+          # 2. 修改标签为你的阿里云仓库地址
+          # 请把下面的“你的命名空间”改为你在阿里云 ACR 创建的名字
+          docker tag diouxx/glpi:latest registry.cn-hangzhou.aliyuncs.com/my_docker_hjj/glpi:latest
+          
+          # 3. 推送到阿里云
+          docker push registry.cn-hangzhou.aliyuncs.com/my_docker_hjj/glpi:latest
