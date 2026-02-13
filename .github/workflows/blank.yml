@@ -14,19 +14,9 @@ jobs:
           username: "aliyun7784950146"
           password: "@hjl287589225"
 
-      - name: Sync Images
+      - name: Sync GLPI 9.5 Image
         run: |
-          # 1. 同步 diouxx/glpi
-          docker pull diouxx/glpi:latest
-          docker tag diouxx/glpi:latest crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-glpi:latest
-          docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-glpi:latest
-
-          # 2. 同步 MariaDB (diouxx 镜像通常建议配合 MariaDB 使用)
-          docker pull mariadb:10.5
-          docker tag mariadb:10.5 crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-db:10.5
-          docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-db:10.5
-
-          # 3. 同步 Mosquitto
-          docker pull eclipse-mosquitto:latest
-          docker tag eclipse-mosquitto:latest crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-mqtt:latest
-          docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-mqtt:latest
+          # 拉取 9.5 版本的镜像
+          docker pull diouxx/glpi:9.5.14
+          docker tag diouxx/glpi:9.5.14 crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-glpi:9.5.14
+          docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-glpi:9.5.14
