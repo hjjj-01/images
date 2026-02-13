@@ -19,10 +19,10 @@ jobs:
       - name: Pull and Push
         run: |
           # 1. 拉取原始镜像
-          docker pull diouxx/glpi:latest
+          docker pull flyvemdm/flyve-mdm:latest
           
           # 2. 标记镜像（推送到 images 仓库）
-          docker tag diouxx/glpi:latest crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/images:latest
+          docker tag flyvemdm/flyve-mdm:latest crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/images:latest
           
           # 3. 推送
           docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/images:latest
