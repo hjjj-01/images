@@ -1,4 +1,4 @@
-name: Sync Flyve MDM to Aliyun ACR
+name: Sync GLPI(diouxx) and Deps to Aliyun ACR
 
 on:
   workflow_dispatch: 
@@ -14,20 +14,19 @@ jobs:
           username: "aliyun7784950146"
           password: "@hjl287589225"
 
-      - name: Sync GLPI Image
+      - name: Sync Images
         run: |
-          docker pull diogosantos/glpi:latest
-          docker tag diogosantos/glpi:latest crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-glpi:latest
+          # 1. 同步 diouxx/glpi
+          docker pull diouxx/glpi:latest
+          docker tag diouxx/glpi:latest crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-glpi:latest
           docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-glpi:latest
 
-      - name: Sync Database Image
-        run: |
-          docker pull mariadb:10.3
-          docker tag mariadb:10.3 crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-db:10.3
-          docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-db:10.3
+          # 2. 同步 MariaDB (diouxx 镜像通常建议配合 MariaDB 使用)
+          docker pull mariadb:10.5
+          docker tag mariadb:10.5 crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-db:10.5
+          docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-db:10.5
 
-      - name: Sync MQTT Image
-        run: |
+          # 3. 同步 Mosquitto
           docker pull eclipse-mosquitto:latest
           docker tag eclipse-mosquitto:latest crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-mqtt:latest
           docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-mqtt:latest
