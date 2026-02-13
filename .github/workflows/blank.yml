@@ -1,4 +1,4 @@
-name: Docker Hub to Aliyun ACR
+name: Sync Flyve MDM to Aliyun ACR
 
 on:
   workflow_dispatch: 
@@ -10,19 +10,24 @@ jobs:
       - name: Login to Aliyun ACR
         uses: docker/login-action@v3
         with:
-          # 使用你的长串域名
           registry: crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com
-          # 直接填入字符串，记得加引号
           username: "aliyun7784950146"
           password: "@hjl287589225"
 
-      - name: Pull and Push
+      - name: Sync GLPI Image
         run: |
-          # 1. 拉取原始镜像
-          docker pull flyvemdm/flyve-mdm:latest
-          
-          # 2. 标记镜像（推送到 images 仓库）
-          docker tag flyvemdm/flyve-mdm:latest crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/images:latest
-          
-          # 3. 推送
-          docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/images:latest
+          docker pull flyve/glpi:latest
+          docker tag flyve/glpi:latest crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-glpi:latest
+          docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-glpi:latest
+
+      - name: Sync Database Image
+        run: |
+          docker pull mariadb:10.3
+          docker tag mariadb:10.3 crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-db:10.3
+          docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-db:10.3
+
+      - name: Sync MQTT Image
+        run: |
+          docker pull eclipse-mosquitto:latest
+          docker tag eclipse-mosquitto:latest crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-mqtt:latest
+          docker push crpi-g0k8beusue76m4g0.cn-hangzhou.personal.cr.aliyuncs.com/my_docker_hjj/flyve-mqtt:latest
